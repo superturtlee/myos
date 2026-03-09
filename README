@@ -1,1 +1,17 @@
-This project is a demo for 
+# MyOS
+
+A lightweight operating system project.
+
+## Overview
+MyOS is a custom operating system implementation designed to explore core OS concepts including memory management, process scheduling, and interrupt handling.
+
+## Features
+- MBR Bootloader
+- PAGING utils
+- Basic kernel architecture WIP
+- Process management NOT STARTED
+- Memory management WIP(KMALLOC)
+- Interrupt handling WIP
+
+## License
+MIT License
