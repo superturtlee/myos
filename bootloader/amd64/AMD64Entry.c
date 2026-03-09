@@ -49,13 +49,12 @@ void AMD64_entry(void) {//must be the first function in the file, and must be ca
 		char found_magic = 1;
 		for (j = 0; j < 7; j++) {
 			if (buffer[j] != bootfs_magic[j]){
-				puts("Bootfs magic not found at LBA=");
-				puthex32((u32)i);
-				putc('\n');
 				found_magic = 0; break;}
 		}
 		if (found_magic) {
-			puts("BOOTFS Found!\n");
+			puts("BOOTFS Found at LBA ");
+			puthex32((u32)i);
+			putc('\n');
 			struct bootfs_control ctrl;
 			bootfs_init(&ctrl, &ahci_dev, (u64)i * 512);
 			int file_size = bootfs_file_size(&ctrl, "kernel.bin");

@@ -1,6 +1,6 @@
 CFLAGS = -m64 -ffreestanding -fpie -fno-stack-protector -I./mem
 
-SRCS = kernelmain.c mem/page.c mem/sysmap.c
+SRCS = kernelmain.c mem/page.c mem/sysmap.c charoutput/vgascreen.c charoutput/charoutput.c
 OBJS = $(SRCS:.c=.o)
 
 %.o: %.c

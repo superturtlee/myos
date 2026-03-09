@@ -13,6 +13,7 @@ typedef struct pte_t {
     u64 entries[512];
 } __attribute__((aligned(4096))) pte_t;
 typedef enum{
+    PAGE_NONE = 0,
     PAGE_PRESENT = 1ULL << 0,
     PAGE_WRITEABLE = 1ULL << 1,
     PAGE_USER = 1ULL << 2,
@@ -47,7 +48,9 @@ int lookup_physical_address(pgd_t* pgd, void* virtual_address, u64* physical_add
 void finalize_phymap(u64 map_addr);
 void* phys_to_ptr(u64 phys_addr);
 u64 ptr_to_phys(void* ptr);
+int set_leaf_page_flags(pgd_t* pgd,  page_flags_t flags, u64 pgd_index, u64 pud_index, u64 pmd_index, u64 pte_index) ;
 void load_page_directory(pgd_t* pgd);
+void flush_tlb();
 #define PAGE_ADDR_4K_MASK 0xFFFFFFFFFFFFF000ULL
 #define PAGE_ADDR_2M_MASK 0xFFFFFFFFFFE00000ULL
 #define PAGE_ADDR_1G_MASK 0xFFFFFFFFC0000000ULL

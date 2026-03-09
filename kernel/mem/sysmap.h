@@ -1,6 +1,6 @@
 #include "page.h"
 #include "defs.h"
-#define initial_stack_top (KERNEL_VIRT-1)//510映射KERNEL_VIRT的1GB前面的509就是堆栈区域，所以初始栈顶就是KERNEL_VIRT-1
+#define initial_stack_top (KERNEL_VIRT-8)//510映射KERNEL_VIRT的1GB前面的509就是堆栈区域，初始栈顶需要8字节对齐(jmp进入函数，ABI要求RSP≡8 mod 16)
 /*
 KERNEL PUD in pgt 511:
 511: modules, currently unused
