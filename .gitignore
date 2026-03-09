@@ -1,0 +1,33 @@
+# 忽略编译生成的目标文件
+*.o
+*.a
+*.so
+
+# 忽略可执行文件（但谨慎，可能误伤）
+# 可以具体指定
+/bootloader/amd64/mbr/boot
+/bootloader/amd64/mbr/amd64entry.bin
+/utils/bootfs/mkbootfs
+/utils/bootfs/extractbootfs
+/utils/pagecalc/pagecalc
+
+# 忽略镜像文件
+*.bin
+*.elf
+*.img
+
+# 忽略所有build目录下的内容
+**/build/
+
+# 忽略编辑器临时文件
+*~
+*.swp
+*.swo
+*.tmp
+
+# 忽略依赖文件
+*.d
+
+# 忽略内核生成的二进制
+/kernel/kernel.bin
+/kernel/kernel.elf

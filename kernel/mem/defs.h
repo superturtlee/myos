@@ -1,0 +1,10 @@
+#define KERNEL_PHYS 0x200000ULL
+#define KERNEL_VIRT 0xFFFFFFFF80000000ULL
+#define PHYSICAL_VIRT 0xFFFFFE8000000000ULL
+#define KB (1<<10)
+#define MB (1<<20)
+#define GB (1ULL<<30)
+#define PAGE_SIZE 2*MB // 2MB pages
+#define KERNEL_PHYS_END 512*MB
+
+
