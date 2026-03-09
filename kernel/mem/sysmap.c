@@ -72,11 +72,20 @@ void k_init_kernel_pages(int kernel_size) {
     }
 
     load_page_directory(kernel_PGD);
+
+    // Enable EFER.NXE (bit 11) so that bit 63 (NX) in page table entries
+    // is recognised as No-Execute instead of being a reserved bit.
+    {
+        u32 lo, hi;
+        __asm__ __volatile__("rdmsr" : "=a"(lo), "=d"(hi) : "c"(0xC0000080U));
+        lo |= (1U << 11); // NXE
+        __asm__ __volatile__("wrmsr" : : "c"(0xC0000080U), "a"(lo), "d"(hi));
+    }
+
     //int set_leaf_page_flags(pgd_t* pgd, void* virtual_address, page_flags_t flags, u64 pgd_index, u64 pud_index, u64 pmd_index, u64 pte_index) 
     
     //set PAGE_GLOBAL
     //Linar map
-    /** /
     for(int i=0;i<get_phys_size()/GB;i++){
         if (set_leaf_page_flags(kernel_PGD, PAGE_GLOBAL | (1ULL<<63), 509+i/512, i%512, 999, 999) != 0) {
             for(;;){ __asm__ __volatile__("hlt"); }
@@ -94,7 +103,6 @@ void k_init_kernel_pages(int kernel_size) {
             for(;;){ __asm__ __volatile__("hlt"); }
         }
     }
-/**/
 
     finalize_phymap(PHYSICAL_VIRT);//page509/510 is the start of the physical memory mapping, so we set phymap to 0xFFFFFFFF80000000ULL-0x0000fe8000000000ULL=0xFFFFFFFF80000000ULL-0x0000fe8000000000ULL=0xFFFFFFFF80000000ULL-0x₀₀₀₀fe8₀₀₀₀₀₀₀₀=512GB
     //later we will update the pointers to the page tables to the virtual address, but currently we can still use the physical address to access the page tables, because we have identity mapped the first 1GB of physical memory in the temp page tables, and we have mapped the first 1GB of physical memory to the kernel virtual address in the kernel page tables, so we can access the page tables through the kernel virtual address after we jump to the kernel virtual address to execute the kernel, so we don't need to update the pointers to the page tables to the virtual address now, we can do it later when we jump to the kernel virtual address to execute the kernel.
