@@ -1,4 +1,4 @@
-#include "shed.h"
+#include "simple.h"
 #include "../page.h"
 //#include "page.h" we don't need page.h because we only shed physical memory
 struct linked_list_node {
@@ -14,12 +14,7 @@ struct simple_shed_internal {
     u64 end_addr;// the end address of the memory shed
     void* lock;// lock for the memory shed
 };
-void lock(void* lock) {
-}
-void unlock(void* lock) {
-}
-void init_lock(void* lock) {
-}
+
 void allign_4k(u64* addr) {
     if (*addr % 4096 != 0) {
         *addr = (*addr + 4096) >> 12 << 12;// allign to 4k
