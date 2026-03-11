@@ -14,10 +14,12 @@ KERNEL PUD in pgt 511:
     2M+KSIZE[]-2M+KSIZE[]+24KB: kernel pts for all process 
     2M+KSIZE[]+2M-2M+KSIZE[]+2M+64MB heap
 */
-#define initial_stack_size (64*MB)
+#define initial_stack_size (64*MB)//非常不合理 但是不管了
 extern pgd_t* kernel_PGD;// 在初始化页表之前，指向页表物理地址，初始化后将指向页表虚拟地址，然后内核会jump到内核虚拟地址执行
 extern pud_t* kernel_PUD;// 在初始化页表之前，指向页表物理地址，初始化后将指向页表虚拟地址 进程共享
 extern pud_t* phys_PUD0;
 extern pud_t* phys_PUD1;
+extern pmd_t* kernel_stack_PMD;// 内核栈页表，进程共享
+extern u64 unsuable_mems;//记录不可用内存的大小，单位是字节，主要用于后续的内存管理，暂时没有用到，先保留这个变量，以后可能会用到
 void k_unmap_low_memory();
 void k_init_kernel_pages(int kernel_size);
